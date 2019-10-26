@@ -48,3 +48,7 @@ const listener = app.listen(process.env.PORT || 3000, () => {
 })
 
 const Schema = mongoose.Schema;
+const userSchema = new Schema({
+  username: {type: String, requied: true},
+  description
+});
