@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
+const moment = require('moment');
 
 const cors = require('cors')
 
@@ -47,8 +48,16 @@ const listener = app.listen(process.env.PORT || 3000, () => {
   console.log('Your app is listening on port ' + listener.address().port)
 })
 
+app.get('/test', function(req, res){
+  res.json({test: moment().subtract(10, 'days').calendar()})
+})
+
 const Schema = mongoose.Schema;
+const exerciseSchema = new Schema({
+  description: {type: String, required: true}
+  //duration: {type}
+});
 const userSchema = new Schema({
-  username: {type: String, requied: true},
-  description
+  username: {type: String, required: true}
+  //description
 });
