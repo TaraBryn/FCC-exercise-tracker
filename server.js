@@ -59,7 +59,13 @@ app.post('/api/exercise/add', function(req, res){
     date = new Date(date);
     var exercise = new exerciseModel({description, duration, date});
     userModel.findByIdAndUpdate({_id: userId}, {$set: {exercise}}, {new: true}, function(err, data){
-      
+      if (err) return console.log({error: err});
+      exerciseDate = data.exercise[data.exercise.length];
+      res.json({username: data.username, 
+                description: exerciseData.description, 
+                duration: exerciseData.duration, 
+                _id: data._id, 
+                date: data.date});
     });
   }
   catch(error){
