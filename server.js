@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
 const moment = require('moment');
+moment().format()
 
 const cors = require('cors')
 
