@@ -41,21 +41,26 @@ const userModel = new mongoose.model('user', userSchema);
 
 app.post('/api/exercise/new-user', function(req, res){
   var username = req.body.username;
-  userModel.get({username}, function(err, existingData){
+  userModel.find({username}, function(err, existingData){
     if (err) return res.json({error: err});
     if (existingData.length > 0) return res.send('username already taken');
     var user = new userModel({username});
     user.save(function(error, data){
       if (error) return res.json({error});
-      res.json({username: data.username, })
+      res.json({username: data.username, _id: data._id});
     });
-  })
-  var user = new userModel({username: req.body.username});
-  user.save(function(error, data){
-    if (error) return res.json({error});
-    res.json({username: data.username, _id: data._id});
-  })
-})
+  });
+});
+
+app.post('/api/exercise/add', function(req, res){
+  try{
+    var {userId, description, duration, date} = req.body;
+    
+  }
+  catch(error){
+    res.json({error})
+  }
+});
 
 
 
