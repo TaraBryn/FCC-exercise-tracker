@@ -58,7 +58,9 @@ app.post('/api/exercise/add', function(req, res){
     duration = parseFloat(duration);
     date = new Date(date);
     var exercise = new exerciseModel({description, duration, date});
-    
+    userModel.findByIdAndUpdate({_id: userId}, {$set: {exercise}}, {new: true}, function(err, data){
+      
+    });
   }
   catch(error){
     res.json({error})
