@@ -20,6 +20,21 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/views/index.html')
 });
 
+app.get('/test', function(req, res){
+  res.json({test: mongoose.Schema.Types})
+})
+
+const Schema = mongoose.Schema;
+const exerciseSchema = new Schema({
+  description: {type: String, required: true}
+  //duration: {type}
+});
+const userSchema = new Schema({
+  username: {type: String, required: true}
+  //description
+});
+
+
 
 // Not found middleware
 app.use((req, res, next) => {
@@ -48,17 +63,3 @@ app.use((err, req, res, next) => {
 const listener = app.listen(process.env.PORT || 3000, () => {
   console.log('Your app is listening on port ' + listener.address().port)
 })
-
-app.get('/test', function(req, res){
-  res.json({test: moment().subtract(10, 'days').calendar()})
-})
-
-const Schema = mongoose.Schema;
-const exerciseSchema = new Schema({
-  description: {type: String, required: true}
-  //duration: {type}
-});
-const userSchema = new Schema({
-  username: {type: String, required: true}
-  //description
-});
