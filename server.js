@@ -21,18 +21,19 @@ app.get('/', (req, res) => {
 });
 
 app.get('/test', function(req, res){
-  res.json({test: typeof moment().subtract(10, 'days').calendar().valueOf()})
+  res.json({test: new Date(moment().startOf('day'))})
 })
 
 const Schema = mongoose.Schema;
+
 const exerciseSchema = new Schema({
   description: {type: String, required: true},
   duration: {type: Number, min: 0, required: true},
-  date: {type: Date}
+  date: {type: Date, default: new Date(moment().startOf('day'))}
 });
 const userSchema = new Schema({
-  username: {type: String, required: true}
-  //description
+  username: {type: String, required: true},
+  exercise: {type: [exerciseSchema], required: true, default: []}
 });
 
 
