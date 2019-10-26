@@ -36,6 +36,9 @@ const userSchema = new Schema({
   exercise: {type: [exerciseSchema], required: true, default: []}
 });
 
+const exerciseModel = new mongoose.model('exercise', exerciseSchema);
+const userModel = new mongoose.model('user', userSchema);
+
 
 
 // Not found middleware
