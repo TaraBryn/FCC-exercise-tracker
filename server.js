@@ -40,6 +40,16 @@ const exerciseModel = new mongoose.model('exercise', exerciseSchema);
 const userModel = new mongoose.model('user', userSchema);
 
 app.post('/api/exercise/new-user', function(req, res){
+  var username = req.body.username;
+  userModel.get({username}, function(err, existingData){
+    if (err) return res.json({error: err});
+    if (existingData.length > 0) return res.send('username already taken');
+    var user = new userModel({username});
+    user.save(function(error, data){
+      if (error) return res.json({error});
+      res.json({username: data.username, })
+    });
+  })
   var user = new userModel({username: req.body.username});
   user.save(function(error, data){
     if (error) return res.json({error});
