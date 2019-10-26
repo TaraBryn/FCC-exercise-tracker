@@ -39,6 +39,14 @@ const userSchema = new Schema({
 const exerciseModel = new mongoose.model('exercise', exerciseSchema);
 const userModel = new mongoose.model('user', userSchema);
 
+app.post('/api/exercise/new-user', function(req, res){
+  var user = new userModel({username: req.body.username});
+  user.save(function(error, data){
+    if (error) return res.json({error});
+    res.json({username: data.username, _id: data._id});
+  })
+})
+
 
 
 // Not found middleware
