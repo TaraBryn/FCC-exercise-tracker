@@ -74,7 +74,9 @@ app.post('/api/exercise/add', function(req, res){
   }
 });
 
-app.get('/')
+app.get('/api/exercise/users', function(req, res){
+  
+})
 
 
 
