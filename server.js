@@ -52,14 +52,14 @@ app.post('/api/exercise/new-user', function(req, res){
   });
 });
 
-app.post('/api/exercise/add, function(req, res){
+app.post('/api/exercise/add', function(req, res){
   try{
     var {userId, description, duration, date} = req.body;
     duration = parseFloat(duration);
     date = new Date(date);
     var exercise = new exerciseModel({description, duration, date});
     userModel.findByIdAndUpdate({_id: userId}, {$set: {exercise}}, {new: true}, function(err, data){
-      if (err) return console.log({error: err});
+      if (err) return res.json({error: err});
       var exerciseData = data.exercise[data.exercise.length];
       res.json({username: data.username, 
                 description: exerciseData.description, 
