@@ -85,9 +85,10 @@ app.get('/api/exercise/log', function(req, res){
   //req.query...
   userModel.aggregate({$match: {_id: req.query.userId}},
                      {$unwind: '$exercise'},
-                     function(error, data){
-    
-  })
+                     {$project: {_id: '$_id', 
+                                username: '$username', 
+                                count: '$exercise.length',
+                                log: '$exercise'}})
 })
 
 // Not found middleware
