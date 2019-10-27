@@ -70,13 +70,16 @@ app.post('/api/exercise/add', function(req, res){
     });
   }
   catch(error){
-    res.json({error})
+    res.json({error});
   }
 });
 
 app.get('/api/exercise/users', function(req, res){
-  
-})
+  userModel.find({}, function(error, data){
+    if (error) return res.json({error});
+    
+  });
+});
 
 
 
