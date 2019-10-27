@@ -81,7 +81,9 @@ app.get('/api/exercise/users', function(req, res){
   });
 });
 
-
+app.get('/api/exercise/log', function(req, res){
+  //req.query...
+})
 
 // Not found middleware
 app.use((req, res, next) => {
