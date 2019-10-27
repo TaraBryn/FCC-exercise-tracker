@@ -75,9 +75,9 @@ app.post('/api/exercise/add', function(req, res){
 });
 
 app.get('/api/exercise/users', function(req, res){
-  userModel.find({}, function(error, data){
+  userModel.find({}).select('-exercise').exec(function(error, data){
     if (error) return res.json({error});
-    
+    res.send(data);
   });
 });
 
