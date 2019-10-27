@@ -54,6 +54,7 @@ app.post('/api/exercise/new-user', function(req, res){
 
 app.post('/api/exercise/add', function(req, res){
   try{
+    console.log(req.body)
     var {userId, description, duration, date} = req.body;
     duration = parseFloat(duration);
     date = new Date(date);
