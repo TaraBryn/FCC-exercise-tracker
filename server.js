@@ -88,7 +88,11 @@ app.get('/api/exercise/log', function(req, res){
                      {$project: {_id: '$_id', 
                                 username: '$username', 
                                 count: '$exercise.length',
-                                log: '$exercise'}})
+                                log: '$exercise'}},
+                     function(error, data){
+    if (error) return res.json({error});
+    res.json(data);
+  })
 })
 
 // Not found middleware
