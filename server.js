@@ -52,7 +52,7 @@ app.post('/api/exercise/new-user', function(req, res){
   });
 });
 
-app.post('/api/exercise/add', function(req, res){
+app.post('/api/exercise/add, function(req, res){
   try{
     var {userId, description, duration, date} = req.body;
     duration = parseFloat(duration);
@@ -60,12 +60,12 @@ app.post('/api/exercise/add', function(req, res){
     var exercise = new exerciseModel({description, duration, date});
     userModel.findByIdAndUpdate({_id: userId}, {$set: {exercise}}, {new: true}, function(err, data){
       if (err) return console.log({error: err});
-      exerciseDate = data.exercise[data.exercise.length];
+      var exerciseData = data.exercise[data.exercise.length];
       res.json({username: data.username, 
                 description: exerciseData.description, 
                 duration: exerciseData.duration, 
                 _id: data._id, 
-                date: data.date});
+                date: exerciseData.date});
     });
   }
   catch(error){
