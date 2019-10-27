@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
 const moment = require('moment');
-moment().format()
+const dayFormat = 'ddd, MMM Do YYYY';
 
 const cors = require('cors')
 
@@ -66,13 +66,15 @@ app.post('/api/exercise/add', function(req, res){
                 description: exerciseData.description, 
                 duration: exerciseData.duration, 
                 _id: data._id, 
-                date: exerciseData.date});
+                date: moment(exerciseData.date).format(dayFormat)});
     });
   }
   catch(error){
     res.json({error})
   }
 });
+
+app.get('/')
 
 
 
