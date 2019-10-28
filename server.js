@@ -83,7 +83,8 @@ app.get('/api/exercise/users', function(req, res){
 
 app.get('/api/exercise/log', function(req, res){
   //req.query...
-  userModel.aggregate([{$match: {_id: req.query.userId}},
+  userModel.find()
+  /*userModel.aggregate([{$match: {_id: req.query.userId}},
                      {$unwind: '$exercise'},
                      {$project: {_id: '$_id', 
                                 username: '$username', 
@@ -93,8 +94,8 @@ app.get('/api/exercise/log', function(req, res){
     if (error) return res.json({error});
     console.log(data);
     res.json(data);
-  })
-})
+  })*/
+});
 
 // Not found middleware
 app.use((req, res, next) => {
