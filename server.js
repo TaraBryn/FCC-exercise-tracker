@@ -84,18 +84,24 @@ app.get('/api/exercise/users', function(req, res){
 app.get('/api/exercise/log', function(req, res){
   //req.query...
     try {
-      var from = req.query.from ? new Date(req.query.from) : new Date(0);
-      var to = req.query.to ? new Date(req.query.to) : new Date();
-      userModel.find({_id: req.query.userId, exercise: {$elemMatch: {date: {$gte: from, $lte: to}}}},
-                         function(error, data){
+      userModel.findbyId({_id: req.query.userId}, function(error, data){
         if (error) return res.json({error});
         res.json({
           _id: data._id,
           username: data.username,
           count: data.exercise.length,
-          log: data.exercise.map(e=>{return {description: e.description, 
-                                             duration: e.duration, 
-                                             date: moment(e.date).format(dayFormat)}})
+          log: data.exercise
+          .filter(function(e){
+            var result = true;
+            if (req.query.from && e.date < new Date(req.query.from))
+              result = false;
+            if (req.query.to && e.date > new Date(req.query.to))
+              result = false;
+            return result;
+          })
+          .map(e=>{return {description: e.description,
+                           duration: e.duration, 
+                           date: moment(e.date).format(dayFormat)}})
         });
       });
     }
