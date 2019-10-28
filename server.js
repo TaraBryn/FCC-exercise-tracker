@@ -83,26 +83,23 @@ app.get('/api/exercise/users', function(req, res){
 
 app.get('/api/exercise/log', function(req, res){
   //req.query...
-  //var from = req.query.from ? new Date(req.query.from) : 
-  userModel.find({_id: req.query.userId, 
-                  exercise: req.query.from 
-                  ? req.query.to 
-                    ? {$elemMatch: {date: {$gte: new Date(req.query.from), $lte: new Date(req.query.to)}}}
-                    : {$elemMatch: {date: {$gte: new Date(req.query.from)}}}
-                  : req.query.to
-                    ? {$elemMatch: {date: {$lte: new Date(req.query.to)}}}
-                 },
-                     function(error, data){
-    if (error) return res.json({error});
-    res.json({
-      _id: data._id,
-      username: data.username,
-      count: data.exercise.length,
-      log: data.exercise.map(e=>{return {description: e.description, 
-                                         duration: e.duration, 
-                                         date: moment(e.date).format(dayFormat)}})
-    });
-  });
+    try {
+      var from = req.query.from ? new Date(req.query.from) : new Date(0);
+      var to = req.query.to ? new Date(req.query.to) : new Date();
+      userModel.find({_id: req.query.userId, exercise: {$elemMatch: {date: {$gte: from, $lte: to}}}},
+                         function(error, data){
+        if (error) return res.json({error});
+        res.json({
+          _id: data._id,
+          username: data.username,
+          count: data.exercise.length,
+          log: data.exercise.map(e=>{return {description: e.description, 
+                                             duration: e.duration, 
+                                             date: moment(e.date).format(dayFormat)}})
+        });
+      });
+    }
+  catch (error){res.json({error});}
 });
 
 // Not found middleware
