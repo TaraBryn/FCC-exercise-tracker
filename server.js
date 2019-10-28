@@ -83,7 +83,8 @@ app.get('/api/exercise/users', function(req, res){
 
 app.get('/api/exercise/log', function(req, res){
   //req.query...
-  userModel.findById({_id: req.query.userId}, {exercise: {$elemMatch: {date: {$gte: new Date(req.query.from), $lte: new Date(req.query.to)}}}},
+  var from = req.query.from ? new Date(req.query.from) : 
+  /*userModel.find({_id: req.query.userId, exercise: {$elemMatch: {date: {$gte: new Date(req.query.from), $lte: new Date(req.query.to)}}}},
                      function(error, data){
     if (error) return res.json({error});
     res.json({
@@ -94,18 +95,7 @@ app.get('/api/exercise/log', function(req, res){
                                          duration: e.duration, 
                                          date: moment(e.date).format(dayFormat)}})
     });
-  });
-  /*userModel.aggregate([{$match: {_id: req.query.userId}},
-                     {$unwind: '$exercise'},
-                     {$project: {_id: '$_id', 
-                                username: '$username', 
-                                count: '$exercise.length',
-                                log: '$exercise'}}],
-                     function(error, data){
-    if (error) return res.json({error});
-    console.log(data);
-    res.json(data);
-  })*/
+  });*/
 });
 
 // Not found middleware
