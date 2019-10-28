@@ -83,7 +83,7 @@ app.get('/api/exercise/users', function(req, res){
 
 app.get('/api/exercise/log', function(req, res){
   //req.query...
-  userModel.find()
+  userModel.find({$})
   /*userModel.aggregate([{$match: {_id: req.query.userId}},
                      {$unwind: '$exercise'},
                      {$project: {_id: '$_id', 
