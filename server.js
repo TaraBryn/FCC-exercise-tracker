@@ -83,14 +83,17 @@ app.get('/api/exercise/users', function(req, res){
 
 app.get('/api/exercise/log', function(req, res){
   //req.query...
-  userModel.findById({_id: req.query.userId}, function(error, data){
+  userModel.findById({_id: req.query.userId}, {exercise: {$elemMatch: {date: {$gte: new Date(req.query.from), $lte: new Date(req.query.to)}}}},
+                     function(error, data){
     if (error) return res.json({error});
     res.json({
       _id: data._id,
       username: data.username,
       count: data.exercise.length,
-      log: data.exercise.map(e=>{description: e.description, duration: e.duration, date: moment(e.date).format(dayFormat)})
-    })
+      log: data.exercise.map(e=>{return {description: e.description, 
+                                         duration: e.duration, 
+                                         date: moment(e.date).format(dayFormat)}})
+    });
   });
   /*userModel.aggregate([{$match: {_id: req.query.userId}},
                      {$unwind: '$exercise'},
