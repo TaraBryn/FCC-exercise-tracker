@@ -84,7 +84,7 @@ app.get('/api/exercise/users', function(req, res){
 app.get('/api/exercise/log', function(req, res){
   //req.query...
     try {
-      userModel.findbyId({_id: req.query.userId}, function(error, data){
+      userModel.findById({_id: req.query.userId}, function(error, data){
         if (error) return res.json({error});
         res.json({
           _id: data._id,
@@ -93,9 +93,10 @@ app.get('/api/exercise/log', function(req, res){
           log: data.exercise
           .filter(function(e){
             var result = true;
-            if (req.query.from && e.date < new Date(req.query.from))
+            console.log(new Date(req.query.from), new Date(req.query.to), new Date(e.date))
+            if (req.query.from && new Date(e.date) < new Date(req.query.from))
               result = false;
-            if (req.query.to && e.date > new Date(req.query.to))
+            if (req.query.to && new Date(e.date) > new Date(req.query.to))
               result = false;
             return result;
           })
